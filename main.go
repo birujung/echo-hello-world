@@ -18,6 +18,7 @@ func main() {
 
 	// Routes
 	e.GET("/", hello)
+	e.GET("/internal", internal)
 
 	// Use 1323 as default port
 	port := os.Getenv("PORT")
@@ -32,4 +33,8 @@ func main() {
 // Handler
 func hello(c echo.Context) error {
 	return c.String(http.StatusOK, "Hello, World!")
+}
+
+func internal(c echo.Context) error {
+	return c.String(http.StatusOK, "Greeting 👋 from internally routed app!")
 }
