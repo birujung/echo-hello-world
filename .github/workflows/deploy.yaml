@@ -28,9 +28,15 @@ jobs:
           docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/echo-hello-world:${{ github.sha }} .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/echo-hello-world:${{ github.sha }}
 
-      - name: Deploy to GKE
+      - name: Authenticate with GKE
         run: |
+          echo "${{ secrets.GCP_SA_KEY }}" > gcp-sa-key.json
+          gcloud auth activate-service-account --key-file=gcp-sa-key.json
           gcloud container clusters get-credentials devops-test --zone asia-southeast1
-          kubectl apply -f k8s/deployment.yaml
+        env:
+          KUBE_CONFIG: ${{ runner.workspace }}/.kube/config
+
+      - name: Deploy to GKE
+        run: kubectl apply -f k8s/deployment.yaml
         env:
           KUBE_CONFIG: ${{ runner.workspace }}/.kube/config
