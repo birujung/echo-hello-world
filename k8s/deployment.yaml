@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-hello-world
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echo-hello-world
+  template:
+    metadata:
+      labels:
+        app: echo-hello-world
+    spec:
+      containers:
+      - name: echo-hello-world
+        image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/echo-hello-world:${{ github.sha }}
+        ports:
+        - containerPort: 1323
