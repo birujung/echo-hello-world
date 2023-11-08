@@ -30,8 +30,8 @@ jobs:
 
       - name: Authenticate with GKE
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" > gcp-sa-key.json
-          gcloud auth activate-service-account --key-file=<(echo "${{ secrets.GCP_SA_KEY }}")
+          echo "${{ secrets.GCP_SA_EMAIL }}" > gcp-sa-email.txt
+          gcloud auth activate-service-account --key-file=gcp-sa-email.txt --project=${{ secrets.GCP_PROJECT_ID }}
           gcloud container clusters get-credentials devops-test --zone asia-southeast1
         env:
           KUBE_CONFIG: ${{ runner.workspace }}/.kube/config
