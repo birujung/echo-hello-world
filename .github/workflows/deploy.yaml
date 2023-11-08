@@ -36,12 +36,12 @@ jobs:
       - name: Configure Docker
         run: |
           docker build \
-          --tag "gcr.io/$GKE_PROJECT/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
+          --tag "asia-southeast1-docker.pkg.dev/$GKE_PROJECT/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
-          docker push gcr.io/$GKE_PROJECT/$REPOSITORY/$IMAGE:$GITHUB_SHA
 
+          docker push asia-southeast1-docker.pkg.dev/$GKE_PROJECT/$REPOSITORY/$IMAGE:$GITHUB_SHA
 
       - name: Set up GKE credentials
         uses: google-github-actions/get-gke-credentials@v0
